@@ -13,15 +13,16 @@ describe Message do
 				it 'should set the sender of the message' do
 				expect(message.sender).to eq(sender)
 			end
-			
+
 			it 'should set the recipient of the message' do
 
 				expect(message.recipient).to eq(recipient)
 			end
 
-			it 'should persist the message to the database'
+			it 'should persist the message to the database' do
+				expect(message.persisted?).to be_true
 		end
-
+	end
 		context 'when neither the sender or receiver is specified' do
 			it 'should raise an error' do
 				expect { message.deliver! }.to raise_error ArgumentError
