@@ -6,7 +6,7 @@ class Message < ActiveRecord::Base
 
   scope :unread, -> { where(read: false) }
 
-  # Deliver this message from sender to recipient.
+ # Deliver this message from sender to recipient.
 #
 # sending   - The User sending the message.
 # receiving - The User receiving the message.
@@ -16,6 +16,8 @@ class Message < ActiveRecord::Base
 		self.sender = sending
 		self.recipient = receiving
   	raise ArgumentError, "both sender and receiver must be specified" unless sending && receiving
+		raise "Body cannot be blank or an empty string" if (body.empty? || body.nil?)
 		self.save
+		
 	end
 end

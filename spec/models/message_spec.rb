@@ -5,6 +5,7 @@ describe Message do
 		let(:message) { Message.new(body: 'Hello, there!') }
 		let(:sender)    { mock_model(User) }
 		let(:recipient) { mock_model(User) }
+		let(:body) { mock_model(Message)}
 
 		context 'when both the sender and recipient are specified' do
 			before(:each) do			
@@ -40,5 +41,12 @@ describe Message do
 				expect { message.deliver! receiving: recipient }.to raise_error ArgumentError
 			end
 		end
+
+		context 'when message body is nil or an empty string' do
+			let(:message) {Message.new(body: '')}
+			it 'should raise an error' do
+				expect {message.deliver! sending: sender, receiving: recipient }.to raise_error 
+			end
+		end	
 	end
 end
